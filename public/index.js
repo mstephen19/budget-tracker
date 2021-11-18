@@ -136,8 +136,8 @@ function sendTransaction(isAdding) {
     })
     .catch((err) => {
       // fetch failed, so save in indexed db
+      if (!checkIfIndexedDbSupported()) return alert('Failed to add!');
       saveRecord(transaction);
-      // clear form
       nameEl.value = '';
       amountEl.value = '';
     });

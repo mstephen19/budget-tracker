@@ -9,10 +9,14 @@ fetch('/api/transaction')
     // save db data on global variable
     transactions = data;
 
-    populateTotal();
-    populateTable();
-    populateChart();
+    populateAll();
   });
+
+function populateAll() {
+  populateTotal();
+  populateTable();
+  populateChart();
+}
 
 function populateTotal() {
   // reduce transaction amounts to a single total value
@@ -70,9 +74,9 @@ function populateChart() {
       labels,
       datasets: [
         {
-          label: 'Total Over Time',
+          label: 'Expenses Over Time',
           fill: true,
-          backgroundColor: '#6666ff',
+          backgroundColor: '#922fe2',
           data,
         },
       ],
@@ -109,9 +113,7 @@ function sendTransaction(isAdding) {
   transactions.unshift(transaction);
 
   // re-run logic to populate ui with new record
-  populateChart();
-  populateTable();
-  populateTotal();
+  populateAll();
 
   // also send to server
   fetch('/api/transaction', {
@@ -143,10 +145,10 @@ function sendTransaction(isAdding) {
     });
 }
 
-document.querySelector('#add-btn').onclick = function () {
+document.querySelector('#add-btn').onclick = () => {
   sendTransaction(true);
 };
 
-document.querySelector('#sub-btn').onclick = function () {
+document.querySelector('#sub-btn').onclick = () => {
   sendTransaction(false);
 };
